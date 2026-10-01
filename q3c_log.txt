@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Taarush Jain
+%%%%% STUDENT ID: 501010905
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -31,30 +31,227 @@
 %%%%% SECTION: q2_queries
 
 %%%%%% QUERY 1
-% EXPLANATION: 
-
+% EXPLANATION: (Q3a) The example from the assignment: the Hilton in Toronto costs $200 on the nights of the 3rd and 4th and $250 on the 5th, so checking in on the 3rd and out on the 6th should cost 200 + 200 + 250 = 650.
+stayCost(the_hilton, toronto, 3, 6, Cost).
 
 
 %%%%%% QUERY 2
-% EXPLANATION: 
-
+% EXPLANATION: (Q3a) Leaves the hotel as a variable to find every Toronto hotel with rooms on the 3rd, 4th and 5th: the_hilton (650) and holiday_inn (3 * 120 = 360).
+stayCost(Hotel, toronto, 3, 6, Cost).
 
 
 %%%%%% QUERY 3
-% EXPLANATION: 
-
+% EXPLANATION: (Q3a) Leaves the city as a variable to find where the_hilton has rooms from the 17th to the 19th. Only the Saskatoon Hilton does, costing 150 + 160 + 170 = 480.
+stayCost(the_hilton, City, 17, 20, Cost).
 
 
 %%%%%% QUERY 4
-% EXPLANATION: 
-
+% EXPLANATION: (Q3a) Leaves both the hotel and the city as variables for a stay on the 15th and 16th. Only the_ritz in Montreal qualifies (2 * 195 = 390); the_queen_elizabeth only has a room on the 16th so it should not be returned.
+stayCost(Hotel, City, 15, 17, Cost).
 
 
 %%%%%% QUERY 5
-% EXPLANATION: 
+% EXPLANATION: (Q3a) The holiday_inn in Toronto has no room on the 7th, so a stay from the 5th to the 9th should fail.
+stayCost(holiday_inn, toronto, 5, 9, Cost).
 
+
+%%%%%% QUERY 6
+% EXPLANATION: (Q3a) The check in date is not before the check out date, so this should fail.
+stayCost(the_hilton, toronto, 6, 6, Cost).
+
+
+%%%%%% QUERY 7
+% EXPLANATION: (Q3b) The example from the assignment: Toronto -> Montreal on the 15th ($200), the_ritz on the 15th and 16th (2 * 195), Montreal -> Quebec City on the 17th ($150), the_chateau_frontenac on the 17th to 19th (3 * 125), and Quebec City -> Toronto on the 20th ($250), for a total of 1365.
+roundTrip(toronto, 15, 20, 3, Cost).
+
+
+%%%%%% QUERY 8
+% EXPLANATION: (Q3b) A looping trip that visits Montreal twice: Toronto -> Montreal (15th, $200), the_ritz 15th-16th ($390), Montreal -> Quebec City (17th, $150), the_chateau_frontenac 17th ($125), Quebec City -> Montreal (18th, $100), the_ritz 18th-19th ($400), Montreal -> Toronto (20th, $190), for a total of 1555.
+roundTrip(toronto, 15, 20, 4, Cost).
+
+
+%%%%%% QUERY 9
+% EXPLANATION: (Q3b) Flying Toronto -> Montreal on the 15th and back on the 20th would need one Montreal hotel for the 15th to the 19th. the_ritz has no room on the 17th and we are not allowed to switch hotels, so this should fail.
+roundTrip(toronto, 15, 20, 2, Cost).
+
+
+%%%%%% QUERY 10
+% EXPLANATION: (Q3b) Leaves the starting city as a variable. Toronto -> Ottawa on the 12th ($100), the_chateau_laurier on the 12th and 13th (250 + 260), Ottawa -> Toronto on the 14th ($110) gives 720. the_lord_elgin is cheaper on the 12th but has no room on the 13th, so it cannot be used.
+roundTrip(City, 12, 14, 2, Cost).
+
+
+%%%%%% QUERY 11
+% EXPLANATION: (Q3b) Leaves the starting city as a variable: Toronto -> Montreal on the 10th ($150), the_ritz on the 10th and 11th (2 * 180), Montreal -> Toronto on the 12th ($160), for a total of 670.
+roundTrip(City, 10, 12, 2, Cost).
+
+
+%%%%%% QUERY 12
+% EXPLANATION: (Q3b) A round trip must have at least 2 flights, so this should fail.
+roundTrip(toronto, 15, 20, 1, Cost).
+
+
+%%%%%% QUERY 13
+% EXPLANATION: (Q3b) The example query form from the assignment with the starting city as a variable. Here the end date (1) is before the start date (3), so no trip exists and it should fail.
+roundTrip(City, 3, 1, 5, Cost).
 
 
 
 %%%%% SECTION: q2_interaction_log
 % Put a log of your interaction of your testing with the above queries here
+
+ECLiPSe Constraint Logic Programming System [kernel threads]
+Kernel and basic libraries copyright Cisco Systems, Inc.
+and subject to the Cisco-style Mozilla Public Licence 1.1
+(see legal/cmpl.txt or http://eclipseclp.org/licence)
+Source available at www.sourceforge.org/projects/eclipse-clp
+GMP library copyright Free Software Foundation, see legal/lgpl.txt
+For other libraries see their individual copyright notices
+Version 7.1beta #13 (x86_64_macosx), Sun Sep  7 20:08 2025
+
+
+% Compile the program (this also loads the KB in q1a_trip_kb.pl)
+[eclipse 1]: [q3_trip_planning].
+source_processor.eco loaded in 0.00 seconds
+hash.eco   loaded in 0.00 seconds
+compiler_common.eco loaded in 0.00 seconds
+compiler_normalise.eco loaded in 0.00 seconds
+compiler_map.eco loaded in 0.00 seconds
+compiler_analysis.eco loaded in 0.00 seconds
+compiler_peephole.eco loaded in 0.00 seconds
+compiler_codegen.eco loaded in 0.00 seconds
+compiler_varclass.eco loaded in 0.00 seconds
+compiler_indexing.eco loaded in 0.00 seconds
+compiler_regassign.eco loaded in 0.00 seconds
+asm.eco    loaded in 0.00 seconds
+module_options.eco loaded in 0.00 seconds
+ecl_compiler.eco loaded in 0.00 seconds
+q3_trip_planning.pl compiled 27816 bytes in 0.00 seconds
+
+Yes (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 1
+[eclipse 2]: stayCost(the_hilton, toronto, 3, 6, Cost).
+
+Cost = 650
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 2
+[eclipse 3]: stayCost(Hotel, toronto, 3, 6, Cost).
+
+Hotel = the_hilton
+Cost = 650
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+Hotel = holiday_inn
+Cost = 360
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 3
+[eclipse 4]: stayCost(the_hilton, City, 17, 20, Cost).
+
+City = saskatoon
+Cost = 480
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 4
+[eclipse 5]: stayCost(Hotel, City, 15, 17, Cost).
+
+Hotel = the_ritz
+City = montreal
+Cost = 390
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 5
+[eclipse 6]: stayCost(holiday_inn, toronto, 5, 9, Cost).
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 6
+[eclipse 7]: stayCost(the_hilton, toronto, 6, 6, Cost).
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 7
+[eclipse 8]: roundTrip(toronto, 15, 20, 3, Cost).
+
+Cost = 1365
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 8
+[eclipse 9]: roundTrip(toronto, 15, 20, 4, Cost).
+
+Cost = 1555
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 9
+[eclipse 10]: roundTrip(toronto, 15, 20, 2, Cost).
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 10
+[eclipse 11]: roundTrip(City, 12, 14, 2, Cost).
+
+City = toronto
+Cost = 720
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 11
+[eclipse 12]: roundTrip(City, 10, 12, 2, Cost).
+
+City = toronto
+Cost = 670
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 12
+[eclipse 13]: roundTrip(toronto, 15, 20, 1, Cost).
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 13
+[eclipse 14]: roundTrip(City, 3, 1, 5, Cost).
+
+No (0.00s cpu)
+
+[eclipse 15]: halt.

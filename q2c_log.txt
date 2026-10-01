@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Taarush Jain
+%%%%% STUDENT ID: 501010905
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -31,30 +31,160 @@
 %%%%% SECTION: q2_queries
 
 %%%%%% QUERY 1
-% EXPLANATION: 
-
+% EXPLANATION: Computes the subtotal of the order (cost of all products, not including shipping or tax). With 3 laptops at $1000, 3 monitors at $500 and 3 keyboards at $75 this should be 3*1000 + 3*500 + 3*75 = 4725.
+subtotal(Sub).
 
 
 %%%%%% QUERY 2
-% EXPLANATION: 
-
+% EXPLANATION: Computes the pre-tax cost of the order with regular shipping. The subtotal (4725) is at least freeRegularShippingMin (4000), so regular shipping is free and the cost should equal the subtotal, 4725.
+costWithShipping(regular, Cost).
 
 
 %%%%%% QUERY 3
-% EXPLANATION: 
-
+% EXPLANATION: Computes the pre-tax cost of the order with express shipping. The subtotal is below freeExpressShippingMin (10000), so shipping is charged. Regular shipping is 3*12 + 3*8 + 3*5 = 75, and the 0.25 express rate raises it to 93.75, so the cost should be 4725 + 93.75 = 4818.75.
+costWithShipping(express, Cost).
 
 
 %%%%%% QUERY 4
-% EXPLANATION: 
-
+% EXPLANATION: Computes the total cost (including 13% tax) with regular shipping. Shipping is free, so this should be 4725 * 1.13 = 5339.25.
+totalCost(regular, Cost).
 
 
 %%%%%% QUERY 5
-% EXPLANATION: 
+% EXPLANATION: Computes the total cost (including 13% tax) with express shipping. Tax applies to both the products and the shipping, so this should be 4818.75 * 1.13 = 5445.1875.
+totalCost(express, Cost).
 
+
+%%%%%% QUERY 6
+% EXPLANATION: Leaves the shipping type as a variable, so it should list the pre-tax cost for both valid shipping types (regular and express).
+costWithShipping(Type, Cost).
+
+
+%%%%%% QUERY 7
+% EXPLANATION: Checks that a shipping type other than regular or express (overnight) is not accepted, so this query should fail.
+totalCost(overnight, Cost).
+
+
+%%%%%% QUERY 8
+% EXPLANATION: Checks that subtotal also works when the subtotal is given: it should succeed for the correct value 4725.
+subtotal(4725).
+
+
+%%%%%% QUERY 9
+% EXPLANATION: Checks that subtotal fails when given an incorrect value.
+subtotal(5000).
 
 
 
 %%%%% SECTION: q2_interaction_log
 % Put a log of your interaction of your testing with the above queries here
+
+ECLiPSe Constraint Logic Programming System [kernel threads]
+Kernel and basic libraries copyright Cisco Systems, Inc.
+and subject to the Cisco-style Mozilla Public Licence 1.1
+(see legal/cmpl.txt or http://eclipseclp.org/licence)
+Source available at www.sourceforge.org/projects/eclipse-clp
+GMP library copyright Free Software Foundation, see legal/lgpl.txt
+For other libraries see their individual copyright notices
+Version 7.1beta #13 (x86_64_macosx), Sun Sep  7 20:08 2025
+
+
+% Compile the rules (this also loads the KB in q2a_estore_kb.pl)
+[eclipse 1]: [q2b_estore_calc].
+source_processor.eco loaded in 0.00 seconds
+hash.eco   loaded in 0.00 seconds
+compiler_common.eco loaded in 0.00 seconds
+compiler_normalise.eco loaded in 0.00 seconds
+compiler_map.eco loaded in 0.00 seconds
+compiler_analysis.eco loaded in 0.00 seconds
+compiler_peephole.eco loaded in 0.00 seconds
+compiler_codegen.eco loaded in 0.00 seconds
+compiler_varclass.eco loaded in 0.00 seconds
+compiler_indexing.eco loaded in 0.00 seconds
+compiler_regassign.eco loaded in 0.00 seconds
+asm.eco    loaded in 0.00 seconds
+module_options.eco loaded in 0.00 seconds
+ecl_compiler.eco loaded in 0.00 seconds
+q2b_estore_calc.pl compiled 8944 bytes in 0.00 seconds
+
+Yes (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 1
+[eclipse 2]: subtotal(Sub).
+
+Sub = 4725
+Yes (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 2
+[eclipse 3]: costWithShipping(regular, Cost).
+
+Cost = 4725
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 3
+[eclipse 4]: costWithShipping(express, Cost).
+
+Cost = 4818.75
+Yes (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 4
+[eclipse 5]: totalCost(regular, Cost).
+
+Cost = 5339.25
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 5
+[eclipse 6]: totalCost(express, Cost).
+
+Cost = 5445.1875
+Yes (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 6
+[eclipse 7]: costWithShipping(Type, Cost).
+
+Type = regular
+Cost = 4725
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+Type = express
+Cost = 4818.75
+Yes (0.00s cpu, solution 2)
+
+
+% ------------------------------------------------------------------------
+% QUERY 7
+[eclipse 8]: totalCost(overnight, Cost).
+
+No (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 8
+[eclipse 9]: subtotal(4725).
+
+Yes (0.00s cpu)
+
+
+% ------------------------------------------------------------------------
+% QUERY 9
+[eclipse 10]: subtotal(5000).
+
+No (0.00s cpu)
+
+[eclipse 11]: halt.

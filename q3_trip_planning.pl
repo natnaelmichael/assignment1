@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Taarush Jain
+%%%%% STUDENT ID: 501010905
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -46,6 +46,16 @@ day(31).
 % the KB code (our own test KBs, that is), and the code in q3_day_helper. All other code 
 % in this file will be ignored. Thus, any helpers for stayCost must be included here.
 
+% Base case: checking out the day after checking in is a single night at the hotel.
+stayCost(Hotel, City, CheckinDate, CheckoutDate, Cost) :-
+    CheckoutDate is CheckinDate + 1,
+    hasRoom(Hotel, City, CheckinDate, Cost).
+% Recursive case: pay for the first night, then stay at the same hotel from the next day.
+stayCost(Hotel, City, CheckinDate, CheckoutDate, Cost) :-
+    NextDate is CheckinDate + 1, NextDate < CheckoutDate,
+    hasRoom(Hotel, City, CheckinDate, NightCost),
+    stayCost(Hotel, City, NextDate, CheckoutDate, RestCost),
+    Cost is NightCost + RestCost.
 
 
 
@@ -55,9 +65,24 @@ day(31).
 % q3a_stay_cost (ie. you may use the program in Q3a as a helper). Any other code needed
 % by roundTrip must be included here.
 
+roundTrip(City, Start, End, NumFlights, Cost) :-
+    NumFlights >= 2,
+    flightSequence(City, Start, City, End, NumFlights, Cost).
 
-
-                                                
+% flightSequence(From, Start, To, End, NumFlights, Cost): there is a legal sequence of
+% exactly NumFlights flights that leaves From on day Start and whose last flight arrives
+% in To on day End. Cost includes all flights plus a single hotel for every night spent
+% in each city between consecutive flights.
+flightSequence(From, Start, To, Start, 1, Cost) :-
+    flight(From, To, Start, Cost).
+flightSequence(From, Start, To, End, NumFlights, Cost) :-
+    NumFlights > 1,
+    flight(From, Stop, Start, FlightCost),
+    day(NextFlightDate), Start < NextFlightDate, NextFlightDate =< End,
+    stayCost(_, Stop, Start, NextFlightDate, HotelCost),
+    RemainingFlights is NumFlights - 1,
+    flightSequence(Stop, NextFlightDate, To, End, RemainingFlights, RestCost),
+    Cost is FlightCost + HotelCost + RestCost.
 
 %%%%% END
 % DO NOT PUT ANY ATOMIC PROPOSITIONS OR LINES BELOW

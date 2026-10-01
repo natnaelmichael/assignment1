@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Taarush Jain
+%%%%% STUDENT ID: 501010905
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -24,6 +24,22 @@
 %%%%% SECTION: q2_kb
 %%%%% You should put the atomic statements for your KB below
 
+cost(laptop, 1000).
+cost(monitor, 500).
+cost(keyboard, 75).
+
+numPurchased(laptop, 3).
+numPurchased(monitor, 3).
+numPurchased(keyboard, 3).
+
+shippingCost(laptop, 12).
+shippingCost(monitor, 8).
+shippingCost(keyboard, 5).
+
+expressShippingRate(0.25).
+taxRate(0.13).
+freeRegularShippingMin(4000).
+freeExpressShippingMin(10000).
 
 %%%%% END
 % DO NOT PUT ANY ATOMIC PROPOSITIONS OR LINES BELOW
