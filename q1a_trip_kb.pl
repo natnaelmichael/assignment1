@@ -3,11 +3,11 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME: Natnael Michael
-%%%%% STUDENT ID: 500982899
+%%%%% NAME: Taarush Jain
+%%%%% STUDENT ID: 501010905
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME:Natnael Michael
+%%%%% STUDENT ID: 500982899
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -23,72 +23,102 @@
 %%%%% SECTION: q1_kb
 %%%%% You should put the atomic statements for your KB below
 
-flight(london, vancouver, 8, 79).
-flight(london, paris, 1, 182).
-flight(london, toronto, 7, 115).
-flight(vancouver, london, 15, 177).
-flight(vancouver, paris, 25, 182).
-flight(vancouver, toronto, 26, 143).
-flight(paris, london, 19, 119).
-flight(paris, vancouver, 2, 115).
-flight(paris, toronto, 13, 198).
-flight(toronto, london, 30, 143).
-flight(toronto, paris, 29, 163).
-flight(toronto, quebec_city, 9, 350).
-flight(vancouver, victoria, 27, 150).
-flight(vancouver, banff, 27, 275).
+% flight(City1, City2, Date, Price)
+flight(toronto, quebec_city, 9, 180).
+flight(quebec_city, toronto, 11, 120).
+flight(toronto, montreal, 10, 150).
+flight(montreal, toronto, 12, 160).
+flight(toronto, ottawa, 12, 100).
+flight(ottawa, toronto, 14, 110).
+flight(toronto, montreal, 15, 200).
+flight(montreal, quebec_city, 17, 150).
+flight(montreal, toronto, 17, 210).
+flight(quebec_city, montreal, 18, 100).
+flight(quebec_city, toronto, 20, 250).
+flight(montreal, toronto, 20, 190).
+flight(toronto, halifax, 19, 90).
+flight(halifax, toronto, 21, 95).
+flight(montreal, ottawa, 18, 80).
+flight(ottawa, montreal, 21, 85).
+flight(montreal, halifax, 21, 200).
+flight(halifax, montreal, 24, 220).
+flight(montreal, vancouver, 22, 400).
+flight(vancouver, montreal, 25, 350).
+flight(montreal, calgary, 23, 260).
+flight(calgary, montreal, 27, 240).
+flight(montreal, toronto, 28, 150).
+flight(toronto, montreal, 31, 200).
+flight(vancouver, victoria, 27, 120).
+flight(vancouver, banff, 27, 200).
 flight(vancouver, calgary, 27, 250).
-flight(montreal, toronto, 21, 150).
-flight(toronto, montreal, 24, 155).
-flight(montreal, toronto, 14, 110).
-flight(toronto, montreal, 12, 100).
-flight(toronto, london, 12, 130).
-flight(london, toronto, 14, 140).
+flight(vancouver, edmonton, 27, 220).
+flight(vancouver, toronto, 27, 450).
 
-hasRoom(best_western, toronto, 1, 82).
-hasRoom(best_western, toronto, 6, 74).
-hasRoom(four_seasons, paris, 29, 167).
-hasRoom(four_seasons, toronto, 6, 9).
-hasRoom(four_seasons, toronto, 7, 182).
-hasRoom(four_seasons, toronto, 25, 90).
-hasRoom(marriot, london, 2, 69).
-hasRoom(marriot, london, 22, 12).
-hasRoom(marriot, paris, 6, 168).
-hasRoom(marriot, paris, 10, 28).
-hasRoom(sheraton, toronto, 9, 36).
-hasRoom(the_sheraton, halifax, 4, 220).
-hasRoom(the_hilton, saskatoon, 17, 180).
-hasRoom(the_hilton, saskatoon, 18, 180).
-hasRoom(the_hilton, saskatoon, 19, 195).
-hasRoom(holiday_inn, toronto, 5, 140).
-hasRoom(holiday_inn, toronto, 6, 140).
-hasRoom(marriot, toronto, 27, 150).
-hasRoom(sheraton, toronto, 27, 170).
-hasRoom(best_western, montreal, 12, 80).
-hasRoom(best_western, montreal, 13, 80).
-hasRoom(marriot, london, 12, 120).
-hasRoom(marriot, london, 13, 120).
+% hasRoom(Name, City, Date, Price)
+hasRoom(the_sheraton, halifax, 4, 210).
+hasRoom(the_sheraton, halifax, 5, 215).
+hasRoom(the_sheraton, halifax, 19, 160).
+hasRoom(the_sheraton, halifax, 20, 160).
+hasRoom(the_hilton, saskatoon, 17, 150).
+hasRoom(the_hilton, saskatoon, 18, 160).
+hasRoom(the_hilton, saskatoon, 19, 170).
+hasRoom(the_hilton, saskatoon, 20, 175).
+hasRoom(the_hilton, toronto, 2, 200).
+hasRoom(the_hilton, toronto, 3, 200).
+hasRoom(the_hilton, toronto, 4, 200).
+hasRoom(the_hilton, toronto, 5, 250).
+hasRoom(the_hilton, toronto, 6, 250).
+hasRoom(the_hilton, toronto, 7, 250).
+hasRoom(holiday_inn, toronto, 1, 120).
+hasRoom(holiday_inn, toronto, 2, 120).
+hasRoom(holiday_inn, toronto, 3, 120).
+hasRoom(holiday_inn, toronto, 4, 120).
+hasRoom(holiday_inn, toronto, 5, 120).
+hasRoom(holiday_inn, toronto, 6, 120).
+hasRoom(holiday_inn, toronto, 8, 130).
+hasRoom(the_ritz, montreal, 10, 180).
+hasRoom(the_ritz, montreal, 11, 180).
+hasRoom(the_ritz, montreal, 15, 195).
+hasRoom(the_ritz, montreal, 16, 195).
+hasRoom(the_ritz, montreal, 18, 200).
+hasRoom(the_ritz, montreal, 19, 200).
+hasRoom(the_queen_elizabeth, montreal, 16, 150).
+hasRoom(the_chateau_frontenac, quebec_city, 9, 110).
+hasRoom(the_chateau_frontenac, quebec_city, 10, 110).
+hasRoom(the_chateau_frontenac, quebec_city, 17, 125).
+hasRoom(the_chateau_frontenac, quebec_city, 18, 125).
+hasRoom(the_chateau_frontenac, quebec_city, 19, 125).
+hasRoom(the_chateau_laurier, ottawa, 12, 250).
+hasRoom(the_chateau_laurier, ottawa, 13, 260).
+hasRoom(the_lord_elgin, ottawa, 12, 90).
+hasRoom(the_fairmont, vancouver, 27, 300).
+hasRoom(the_westin, vancouver, 27, 250).
+hasRoom(the_delta, calgary, 27, 180).
 
-ticket(british_museum, london, 22, 156).
-ticket(british_museum, toronto, 30, 121).
-ticket(buckingham_palace, london, 7, 60).
-ticket(buckingham_palace, toronto, 21, 134).
-ticket(cne, toronto, 10, 104).
-ticket(cne, toronto, 11, 67).
-ticket(cne, toronto, 12, 32).
-ticket(eiffel_tower, paris, 10, 161).
-ticket(eiffel_tower, paris, 11, 101).
-ticket(eiffel_tower, toronto, 6, 113).
-ticket(british_museum, london, 19, 116).
-ticket(cne, calgary, 18, 75).
-ticket(opera, vancouver, 8, 60).
-ticket(eiffel_tower, vancouver, 7, 40).
-ticket(eiffel_tower, vancouver, 8, 40).
-ticket(eiffel_tower, vancouver, 9, 40).
-ticket(opera, montreal, 19, 120).
-ticket(cne, montreal, 19, 45).
-ticket(eiffel_tower, montreal, 13, 30).
-ticket(cne, london, 13, 40).
+% ticket(Name, City, Date, Price)
+ticket(calgary_tower, calgary, 18, 25).
+ticket(heritage_park, calgary, 18, 30).
+ticket(calgary_tower, calgary, 19, 25).
+ticket(opera, vancouver, 8, 90).
+ticket(opera, vancouver, 15, 70).
+ticket(opera, vancouver, 22, 60).
+ticket(opera, toronto, 15, 50).
+ticket(capilano_bridge, vancouver, 10, 60).
+ticket(capilano_bridge, vancouver, 11, 60).
+ticket(capilano_bridge, vancouver, 12, 65).
+ticket(capilano_bridge, vancouver, 13, 65).
+ticket(aquarium, vancouver, 20, 40).
+ticket(aquarium, vancouver, 21, 40).
+ticket(aquarium, vancouver, 23, 40).
+ticket(notre_dame_basilica, montreal, 19, 15).
+ticket(canadiens_game, montreal, 19, 120).
+ticket(biodome, montreal, 19, 25).
+ticket(biodome, montreal, 11, 25).
+ticket(old_montreal_tour, montreal, 11, 40).
+ticket(biodome, montreal, 16, 25).
+ticket(war_museum, ottawa, 13, 20).
+ticket(pier_21, halifax, 20, 15).
+ticket(citadelle, quebec_city, 10, 20).
 
 
 %%%%% END
