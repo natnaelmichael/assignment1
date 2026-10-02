@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Natnael Michael
+%%%%% STUDENT ID: 500982899
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -15,15 +15,14 @@
 
 % Add your queries below. Please use the following format
 % Your interaction should then be in the section q2_interaction_log
-% 
+%
 % %%%%% QUERY 2
 % % EXPLANATION: Checks if there is a block on blockA
 % on(X, blockA).
 %
-% where 2 is the number of the query. The EXPLANATION line should contain your explanation 
+% where 2 is the number of the query. The EXPLANATION line should contain your explanation
 % in English of what the query tests. Omit the "%" on the line with the query
 % Don't forget to end queries with a period.
-
 
 
 
@@ -31,30 +30,110 @@
 %%%%% SECTION: q2_queries
 
 %%%%%% QUERY 1
-% EXPLANATION: 
-
+% EXPLANATION: Checks that subtotal/1 computes the pre-tax, pre-shipping
+% cost of the whole order (3*1000 + 3*500 + 3*75 = 4725).
+subtotal(S).
 
 
 %%%%%% QUERY 2
-% EXPLANATION: 
-
+% EXPLANATION: Checks that costWithShipping/2 computes the pre-tax order
+% cost using regular shipping. The subtotal (4725) is below the free
+% regular-shipping minimum (5000), so the standard shipping cost
+% (3*12 + 3*8 + 3*5 = 75) is charged, giving 4800.
+costWithShipping(regular, R).
 
 
 %%%%%% QUERY 3
-% EXPLANATION: 
-
+% EXPLANATION: Checks that costWithShipping/2 computes the pre-tax order
+% cost using express shipping. Express shipping is not free (subtotal is
+% below 7500), so the regular shipping cost (75) is increased by the
+% express rate (0.25) to 93.75, giving 4725 + 93.75 = 4818.75.
+costWithShipping(express, E).
 
 
 %%%%%% QUERY 4
-% EXPLANATION: 
-
+% EXPLANATION: Checks that totalCost/2 computes the final total with
+% regular shipping, adding tax (13%) to the products and the shipping:
+% 4800 + 4800*0.13 = 5424.0.
+totalCost(regular, TR).
 
 
 %%%%%% QUERY 5
-% EXPLANATION: 
+% EXPLANATION: Checks that totalCost/2 computes the final total with
+% express shipping, adding tax (13%) to the products and the shipping:
+% 4818.75 + 4818.75*0.13 = 5445.1875.
+totalCost(express, TE).
+
+
+%%%%%% QUERY 6
+% EXPLANATION: Checks that for the same order express shipping costs more
+% than regular shipping (4818.75 > 4800).
+costWithShipping(regular, R2), costWithShipping(express, E2), E2 > R2.
 
 
 
 
 %%%%% SECTION: q2_interaction_log
 % Put a log of your interaction of your testing with the above queries here
+
+% =====================================================================
+% Interactive ECLiPSe session testing the part (b) rules.
+% System under test: ECLiPSe 7.1beta #13 (x86_64_macosx)
+% q2b_estore_calc.pl imports the KB q2a_estore_kb.pl (see its q2_kb_import
+% section), so compiling it makes both the KB and the rules available.
+% =====================================================================
+
+[eclipse 1]: compile(q2b_estore_calc).
+q2b_estore_calc.pl compiled 8840 bytes in 0.02 seconds
+Yes (0.02s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 1 : subtotal(S).
+% ---------------------------------------------------------------------
+[eclipse 2]: subtotal(S).
+S = 4725
+Yes (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 2 : costWithShipping(regular, R).
+% ---------------------------------------------------------------------
+[eclipse 3]: costWithShipping(regular, R).
+R = 4800
+Yes (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 3 : costWithShipping(express, E).
+% ---------------------------------------------------------------------
+[eclipse 4]: costWithShipping(express, E).
+E = 4818.75
+Yes (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 4 : totalCost(regular, TR).
+% ---------------------------------------------------------------------
+[eclipse 5]: totalCost(regular, TR).
+TR = 5424.0
+Yes (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 5 : totalCost(express, TE).
+% ---------------------------------------------------------------------
+[eclipse 6]: totalCost(express, TE).
+TE = 5445.1875
+Yes (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 6 : costWithShipping(regular, R2), costWithShipping(express, E2), E2 > R2.
+% ---------------------------------------------------------------------
+[eclipse 7]: costWithShipping(regular, R2), costWithShipping(express, E2), E2 > R2.
+R2 = 4800
+E2 = 4818.75
+Yes (0.00s cpu)
+
+[eclipse 8]: halt.

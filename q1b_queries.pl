@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Natnael Michael
+%%%%% STUDENT ID: 500982899
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -17,13 +17,13 @@
 % Do NOT delete, edit, or add SECTION headers.
 % If you put statements in the wrong section, you will lose marks.
 %
-% You may add additional comments as you choose but DO NOT MODIFY 
+% You may add additional comments as you choose but DO NOT MODIFY
 % the already included comment lines below
 %
 %
-% 
+%
 % Add your solution queries in section q1_trip_queries below. The argument in the query
-% should be the answer to question given in natural language. 
+% should be the answer to question given in natural language.
 %
 % To test your queries, first compile this file in ECLiPSe. Doing so will first
 % load your KB, and then create a rule for each query. You can then test a query
@@ -31,7 +31,7 @@
 %
 % > query5(D).
 %
-% Note that the value assigned to each variable in the body of each rule is not 
+% Note that the value assigned to each variable in the body of each rule is not
 % printed out. For example, if you have the following rule
 %
 % query99(X) :- pred1(Y), pred2(X, Y), pred3(Z).
@@ -74,7 +74,7 @@ day(31).
 % This keyword is not helpful beyond this use case and you should NOT use it in this
 % assignment or any other unless explicitly told to. You should similarly never use the
 % "false" keyword.
-% DO NOT CHANGE THE HEADS OF EACH RULE, as we will be testing your queries by calling the 
+% DO NOT CHANGE THE HEADS OF EACH RULE, as we will be testing your queries by calling the
 % head as defined. You will not get marks if you do.
 % DO NOT INTRODUCE ANY HELPER PREDICATES FOR THIS QUESTION.
 
@@ -86,53 +86,83 @@ query1(Price) :- flight(toronto, quebec_city, 9, Price).
 %%% QUERY 2: Does the Sheraton in Halifax have availability on October 4?
 % Use the constants the_sheraton and halifax to refer to the corresponding entities in the query.
 % NOTICE that this rule has no arguments since it is a true or false question.
-query2 :- true.
+query2 :- hasRoom(the_sheraton, halifax, 4, _).
 
 
 %%% QUERY 3: Find an attraction in Calgary that has tickets available for it on October 18.
 % Use the constant calgary to refer to the corresponding entity in the query.
-query3(Event) :- true.
+query3(Event) :- ticket(Event, calgary, 18, _).
 
 
 %%% QUERY 4: On what date can you get opera tickets in Vancouver for less than $75?
 % Use the constants vancouver and opera to refer to the corresponding entities in the query.
-query4(Date) :- true.
+query4(Date) :-
+    ticket(opera, vancouver, Date, Price),
+    Price < 75.
 
 
 %%% QUERY 5: What is the total cost of staying at the Hilton in Saskatoon on October 17, 18, and 19?
 % Use the constants the_hilton and saskatoon to refer to the corresponding entities in the query.
-query5(Cost) :- true.
+query5(Cost) :-
+    hasRoom(the_hilton, saskatoon, 17, Price17),
+    hasRoom(the_hilton, saskatoon, 18, Price18),
+    hasRoom(the_hilton, saskatoon, 19, Price19),
+    Cost is Price17 + Price18 + Price19.
 
 
 %%% QUERY 6: Find a city other than Victoria and Banff, that you can fly to from Vancouver on October 27 for less than $300.
 % Use the constants victoria, banff, and vancouver to refer to the corresponding entities in the query.
-query6(City) :- true.
+query6(City) :-
+    flight(vancouver, City, 27, Price),
+    Price < 300,
+    not(City = victoria),
+    not(City = banff).
 
 
 %%% QUERY 7: Find a city I can fly to and back from Montreal, for a total of no more than \$500, for a 3 night stay sometime from October 20 to 31 (inclusive).
 % Notice the query arguments will show both the city visited, and the starting date of the vacation (ie. the day the flight leaves Montreal).
-query7(City, StartDate) :- true.
+query7(City, StartDate) :-
+    day(StartDate),
+    StartDate >= 20,
+    ReturnDate is StartDate + 3,
+    ReturnDate =< 31,
+    flight(montreal, City, StartDate, OutPrice),
+    flight(City, montreal, ReturnDate, ReturnPrice),
+    Total is OutPrice + ReturnPrice,
+    Total =< 500.
 
 
 %%% QUERY 8: Find a city that has more than 1 hotel with availability on October 27.
 % Notice the query arguments will show the two hotels in question (the order does not matter).
-query8(City, Hotel1, Hotel2) :- true.
+query8(City, Hotel1, Hotel2) :-
+    hasRoom(Hotel1, City, 27, _),
+    hasRoom(Hotel2, City, 27, _),
+    not(Hotel1 = Hotel2).
 
 
 %%% QUERY 9: Find a day in October that the Holiday Inn in Toronto does not have an available room.
 % Use the constants holiday_inn and toronto to refer to the corresponding entities in the query.
-query9(Date) :- true.
+query9(Date) :-
+    day(Date),
+    not(hasRoom(holiday_inn, toronto, Date, _)).
 
 
 %%% QUERY 10: Is there an attraction in Vancouver that has tickets available for any 3 consecutive days in October?
 % Use the constant vancouver to refer to the corresponding entities in the query.
 % Notice the query arguments will show the first of the three consecutive dates.
-query10(Name, Day1) :- true.
+query10(Name, Day1) :-
+    ticket(Name, vancouver, Day1, _),
+    Day2 is Day1 + 1,
+    Day3 is Day2 + 1,
+    ticket(Name, vancouver, Day2, _),
+    ticket(Name, vancouver, Day3, _).
 
 
 %%% QUERY 11: What is the most expensive attraction that has tickets available for it in Montreal on October 19
 % For this query, use the constant montreal to refer to the corresponding entities in the query.
-query11(Name) :- true.
+query11(Name) :-
+    ticket(Name, montreal, 19, Price),
+    not((ticket(_, montreal, 19, OtherPrice), OtherPrice > Price)).
 
 
 %%% QUERY 12: Find the cheapest 2 night vacation that does a round trip from Toronto, has a hotel on both
@@ -140,7 +170,32 @@ query11(Name) :- true.
 % For this query, use the constant toronto to refer to the corresponding entities in the query.
 % Note that the arguments in the query will find the start date of the trip, the city being visited,
 % the hotel to be stayed at, the attraction to attend, and the trip price.
-query12(StartDate, City, Hotel, Attraction, Cost) :- true.
+query12(StartDate, City, Hotel, Attraction, Cost) :-
+    day(StartDate),
+    StartDate >= 10,
+    StartDate =< 18,
+    Day2 is StartDate + 1,
+    ReturnDate is StartDate + 2,
+    flight(toronto, City, StartDate, OutPrice),
+    flight(City, toronto, ReturnDate, ReturnPrice),
+    hasRoom(Hotel, City, StartDate, Night1),
+    hasRoom(Hotel, City, Day2, Night2),
+    ticket(Attraction, City, Day2, TicketPrice),
+    Cost is OutPrice + ReturnPrice + Night1 + Night2 + TicketPrice,
+    not((
+        day(OtherStart),
+        OtherStart >= 10,
+        OtherStart =< 18,
+        OtherDay2 is OtherStart + 1,
+        OtherReturn is OtherStart + 2,
+        flight(toronto, OtherCity, OtherStart, OtherOutPrice),
+        flight(OtherCity, toronto, OtherReturn, OtherReturnPrice),
+        hasRoom(OtherHotel, OtherCity, OtherStart, OtherNight1),
+        hasRoom(OtherHotel, OtherCity, OtherDay2, OtherNight2),
+        ticket(_, OtherCity, OtherDay2, OtherTicketPrice),
+        OtherCost is OtherOutPrice + OtherReturnPrice + OtherNight1 + OtherNight2 + OtherTicketPrice,
+        OtherCost < Cost
+    )).
 
 
 %%%%% END

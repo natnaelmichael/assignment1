@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Natnael Michael
+%%%%% STUDENT ID: 500982899
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -15,15 +15,14 @@
 
 % Add your queries below. Please use the following format
 % Your interaction should then be in the section q2_interaction_log
-% 
+%
 % %%%%% QUERY 2
 % % EXPLANATION: Checks if there is a block on blockA
 % on(X, blockA).
 %
-% where 2 is the number of the query. The EXPLANATION line should contain your explanation 
+% where 2 is the number of the query. The EXPLANATION line should contain your explanation
 % in English of what the query tests. Omit the "%" on the line with the query
 % Don't forget to end queries with a period.
-
 
 
 
@@ -31,30 +30,211 @@
 %%%%% SECTION: q2_queries
 
 %%%%%% QUERY 1
-% EXPLANATION: 
-
+% EXPLANATION: Checks the cost of three nights (the 17th, 18th and 19th) at the
+% Hilton in Saskatoon, where the room costs 180 + 180 + 195 = 555.
+stayCost(the_hilton, saskatoon, 17, 20, Cost).
 
 
 %%%%%% QUERY 2
-% EXPLANATION: 
-
+% EXPLANATION: Checks the cost of two nights (the 5th and 6th) at the Holiday
+% Inn in Toronto, where the room costs 140 + 140 = 280.
+stayCost(holiday_inn, toronto, 5, 7, Cost).
 
 
 %%%%%% QUERY 3
-% EXPLANATION: 
-
+% EXPLANATION: With Hotel as a variable, finds the hotel in Toronto that has a
+% room on both the 6th and the 7th. Only four_seasons qualifies, at 9 + 182 = 191.
+stayCost(Hotel, toronto, 6, 8, Cost).
 
 
 %%%%%% QUERY 4
-% EXPLANATION: 
-
+% EXPLANATION: With both Hotel and City as variables, finds every hotel/city
+% that has a room on both the 12th and the 13th: best_western in montreal
+% (80 + 80 = 160) and marriot in london (120 + 120 = 240).
+stayCost(Hotel, City, 12, 14, Cost).
 
 
 %%%%%% QUERY 5
-% EXPLANATION: 
+% EXPLANATION: Checks that a zero-night stay fails, because the check-in date
+% must be strictly before the check-out date.
+stayCost(holiday_inn, toronto, 6, 6, Cost).
+
+
+%%%%%% QUERY 6
+% EXPLANATION: Checks that the query fails when the hotel has no room on every
+% required night: four_seasons has a room on the 25th but not on the 26th, so
+% a stay from the 25th to the 27th is impossible.
+stayCost(four_seasons, toronto, 25, 27, Cost).
+
+
+%%%%%% QUERY 7
+% EXPLANATION: Finds every 2-flight round trip that leaves Toronto on the 12th
+% and returns on the 14th: Toronto->Montreal->Toronto (370) and
+% Toronto->London->Toronto (510).
+roundTrip(toronto, 12, 14, 2, Cost).
+
+
+%%%%%% QUERY 8
+% EXPLANATION: Checks that the 2-flight Toronto->Montreal->Toronto trip on the
+% 12th/14th costs exactly 370 (100 flight + 160 hotel + 110 flight).
+roundTrip(toronto, 12, 14, 2, 370).
+
+
+%%%%%% QUERY 9
+% EXPLANATION: With City as a variable, finds all 2-flight round trips that
+% leave on the 12th and return on the 14th from any city. Only Toronto has
+% such trips.
+roundTrip(City, 12, 14, 2, Cost).
+
+
+%%%%%% QUERY 10
+% EXPLANATION: Checks that no legal 3-flight round trip from Toronto fits
+% between the 12th and the 14th, so the query fails.
+roundTrip(toronto, 12, 14, 3, Cost).
+
+
+%%%%%% QUERY 11
+% EXPLANATION: Checks that a query with NumFlights < 2 fails, since every trip
+% must go somewhere other than the starting city and then return.
+roundTrip(toronto, 12, 14, 1, Cost).
+
+
+%%%%%% QUERY 12
+% EXPLANATION: Checks that the query fails when no single hotel is available
+% for the whole layover: Toronto->Montreal on the 12th and back on the 21st
+% would need a Montreal hotel for the 12th through the 20th, which the KB
+% does not have (Montreal only has rooms on the 12th and 13th).
+roundTrip(toronto, 12, 21, 2, Cost).
 
 
 
 
 %%%%% SECTION: q2_interaction_log
 % Put a log of your interaction of your testing with the above queries here
+
+% =====================================================================
+% Interactive ECLiPSe session testing the Q3a (stayCost) and Q3b (roundTrip)
+% rules on the Question 1 knowledge base.
+% System under test: ECLiPSe 7.1beta #13 (x86_64_macosx)
+% q3_trip_planning.pl imports q1a_trip_kb.pl (see its q3_kb_import section)
+% and provides the October day/1 facts in q3_day_helper, so compiling it
+% makes the KB, the day facts and both sets of rules available.
+% =====================================================================
+
+[eclipse 1]: compile(q3_trip_planning).
+q3_trip_planning.pl compiled 21816 bytes in 0.01 seconds
+Yes (0.03s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 1 : stayCost(the_hilton, saskatoon, 17, 20, Cost).
+% ---------------------------------------------------------------------
+[eclipse 2]: stayCost(the_hilton, saskatoon, 17, 20, Cost).
+Cost = 555
+Yes (0.00s cpu, solution 1, maybe more) ? <return>
+
+
+% ---------------------------------------------------------------------
+% QUERY 2 : stayCost(holiday_inn, toronto, 5, 7, Cost).
+% ---------------------------------------------------------------------
+[eclipse 3]: stayCost(holiday_inn, toronto, 5, 7, Cost).
+Cost = 280
+Yes (0.00s cpu, solution 1, maybe more) ? <return>
+
+
+% ---------------------------------------------------------------------
+% QUERY 3 : stayCost(Hotel, toronto, 6, 8, Cost).
+% ---------------------------------------------------------------------
+[eclipse 4]: stayCost(Hotel, toronto, 6, 8, Cost).
+Hotel = four_seasons
+Cost = 191
+Yes (0.00s cpu, solution 1, maybe more) ? <return>
+
+
+% ---------------------------------------------------------------------
+% QUERY 4 : stayCost(Hotel, City, 12, 14, Cost).   ('More' used)
+% ---------------------------------------------------------------------
+[eclipse 5]: stayCost(Hotel, City, 12, 14, Cost).
+Hotel = best_western
+City = montreal
+Cost = 160
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+Hotel = marriot
+City = london
+Cost = 240
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 5 : stayCost(holiday_inn, toronto, 6, 6, Cost).
+% ---------------------------------------------------------------------
+[eclipse 6]: stayCost(holiday_inn, toronto, 6, 6, Cost).
+No (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 6 : stayCost(four_seasons, toronto, 25, 27, Cost).
+% ---------------------------------------------------------------------
+[eclipse 7]: stayCost(four_seasons, toronto, 25, 27, Cost).
+No (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 7 : roundTrip(toronto, 12, 14, 2, Cost).   ('More' used)
+% ---------------------------------------------------------------------
+[eclipse 8]: roundTrip(toronto, 12, 14, 2, Cost).
+Cost = 370
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+Cost = 510
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 8 : roundTrip(toronto, 12, 14, 2, 370).
+% ---------------------------------------------------------------------
+[eclipse 9]: roundTrip(toronto, 12, 14, 2, 370).
+Yes (0.00s cpu, solution 1, maybe more) ? <return>
+
+
+% ---------------------------------------------------------------------
+% QUERY 9 : roundTrip(City, 12, 14, 2, Cost).   ('More' used)
+% ---------------------------------------------------------------------
+[eclipse 10]: roundTrip(City, 12, 14, 2, Cost).
+City = toronto
+Cost = 370
+Yes (0.00s cpu, solution 1, maybe more) ? ;
+
+City = toronto
+Cost = 510
+Yes (0.00s cpu, solution 2, maybe more) ? ;
+
+No (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 10 : roundTrip(toronto, 12, 14, 3, Cost).
+% ---------------------------------------------------------------------
+[eclipse 11]: roundTrip(toronto, 12, 14, 3, Cost).
+No (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 11 : roundTrip(toronto, 12, 14, 1, Cost).
+% ---------------------------------------------------------------------
+[eclipse 12]: roundTrip(toronto, 12, 14, 1, Cost).
+No (0.00s cpu)
+
+
+% ---------------------------------------------------------------------
+% QUERY 12 : roundTrip(toronto, 12, 21, 2, Cost).
+% ---------------------------------------------------------------------
+[eclipse 13]: roundTrip(toronto, 12, 21, 2, Cost).
+No (0.00s cpu)
+
+[eclipse 14]: halt.

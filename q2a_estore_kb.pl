@@ -3,8 +3,8 @@
 % If you have 2 group members, leave the last entry blank.
 %
 %%%%%
-%%%%% NAME:
-%%%%% STUDENT ID:
+%%%%% NAME: Natnael Michael
+%%%%% STUDENT ID: 500982899
 %%%%%
 %%%%% NAME:
 %%%%% STUDENT ID:
@@ -16,13 +16,30 @@
 % Do NOT delete, edit, or add SECTION headers.
 % If you put statements in the wrong section, you will lose marks.
 %
-% You may add additional comments as you choose but DO NOT MODIFY 
+% You may add additional comments as you choose but DO NOT MODIFY
 % the already included comment lines below
 %
 
 
 %%%%% SECTION: q2_kb
 %%%%% You should put the atomic statements for your KB below
+
+cost(laptop, 1000).
+cost(monitor, 500).
+cost(keyboard, 75).
+
+numPurchased(laptop, 3).
+numPurchased(monitor, 3).
+numPurchased(keyboard, 3).
+
+shippingCost(laptop, 12).
+shippingCost(monitor, 8).
+shippingCost(keyboard, 5).
+
+expressShippingRate(0.25).
+taxRate(0.13).
+freeRegularShippingMin(5000).
+freeExpressShippingMin(7500).
 
 
 %%%%% END
